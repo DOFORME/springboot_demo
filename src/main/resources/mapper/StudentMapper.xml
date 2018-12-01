@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.springboot.demo.dao.StudentMapper">
+
+    <sql id="column">
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="name != null and name != ''">
+                name
+            </if>
+            <if test="age != null">
+                age
+            </if>
+            <if test="gender != null and gender != ''">
+                gender
+            </if>
+            <if test="address != null address != ''">
+                address
+            </if>
+            <if test="createAt != null">
+                create_at
+            </if>
+            <if test="updateAt != null">
+                update_at
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by
+            </if>
+            <if test="delete != null">
+                is_delete
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="value">
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="name != null and name != ''">
+                #{name}
+            </if>
+            <if test="age != null">
+                #{age}
+            </if>
+            <if test="gender != null and gender != ''">
+                #{gender}
+            </if>
+            <if test="address != null address != ''">
+                #{address}
+            </if>
+            <if test="createAt != null">
+                #{createAt}
+            </if>
+            <if test="updateAt != null">
+                #{updateAt}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                #{createBy}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                #{updateBy}
+            </if>
+            <if test="delete != null">
+                #{delete}
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="save">
+        insert into student(name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
+        values (#{name}, #{age}, #{gender}, #{address}, now(), null, #{createBy}, #{updateBy}, 0)
+    </insert>
+
+    <insert id="saveSelective">
+        insert into student
+        <include refid="column"/>
+        values
+        <include refid="value"/>
+    </insert>
+
+    <insert id="saveStudentList">
+        insert into student
+        (name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
+        values
+        <foreach collection="list" item="item" index="index" separator="),(" open="(" close=")">
+            #{item.name}, #{item.age}, #{item.gender}, #{item.address}, #{item.createAt}, #{item.updateAt},
+            #{item.createBy}, #{item.updateBy}, #{item.delete}
+        </foreach>
+    </insert>
+
+    <insert id="saveStudentAndReturnKey" useGeneratedKeys="true" keyProperty="id">
+        insert into student
+        (name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
+        values
+        (#{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete});
+    </insert>
+
+    <delete id="deleteByName">
+        delete from student where name = #{name}
+    </delete>
+
+    <!--失效-->
+    <update id="updateAndReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="student">
+        update  student set age = #{age} where name = #{name}
+    </update>
+
+
+    <select id="get" resultType="com.lc.springboot.demo.entity.pojo.Student">
+        select id,
+               name,
+               age,
+               gender,
+               address,
+               create_at,
+               update_at,
+               create_by,
+               update_by,
+               is_delete
+        from student
+        where id = #{id}
+    </select>
+
+    <select id="getSameNameStudent" resultType="student">
+        select id,
+               name,
+               age,
+               gender,
+               address,
+               create_at,
+               update_at,
+               create_by,
+               update_by,
+               is_delete
+        from student
+        where name = #{name};
+    </select>
+
+    <select id="getSameNameAndAgeStudent" resultType="student">
+        select id,
+               name,
+               age,
+               gender,
+               address,
+               create_at createAt,
+               update_at updateAt,
+               create_by createBy,
+               update_by updateBy,
+               is_delete isDelete
+        from student
+        where name = #{param1}
+          and age = #{param2}
+    </select>
+</mapper>
+
