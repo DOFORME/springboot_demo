@@ -5,65 +5,65 @@
 <mapper namespace="com.lc.springboot.demo.dao.StudentMapper">
 
     <sql id="column">
-        <trim prefix="(" suffix=")" prefixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">
-                name
+                name,
             </if>
             <if test="age != null">
-                age
+                age,
             </if>
             <if test="gender != null and gender != ''">
-                gender
+                gender,
             </if>
-            <if test="address != null address != ''">
-                address
+            <if test="address != null and address != ''">
+                address,
             </if>
             <if test="createAt != null">
-                create_at
+                create_at,
             </if>
             <if test="updateAt != null">
-                update_at
+                update_at,
             </if>
             <if test="createBy != null and createBy != ''">
-                create_by
+                create_by,
             </if>
             <if test="updateBy != null and updateBy != ''">
-                update_by
+                update_by,
             </if>
             <if test="delete != null">
-                is_delete
+                is_delete,
             </if>
         </trim>
     </sql>
 
     <sql id="value">
-        <trim prefix="(" suffix=")" prefixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">
-                #{name}
+                #{name},
             </if>
             <if test="age != null">
-                #{age}
+                #{age},
             </if>
             <if test="gender != null and gender != ''">
-                #{gender}
+                #{gender},
             </if>
-            <if test="address != null address != ''">
-                #{address}
+            <if test="address != null and address != ''">
+                #{address},
             </if>
             <if test="createAt != null">
-                #{createAt}
+                #{createAt},
             </if>
             <if test="updateAt != null">
-                #{updateAt}
+                #{updateAt},
             </if>
             <if test="createBy != null and createBy != ''">
-                #{createBy}
+                #{createBy},
             </if>
             <if test="updateBy != null and updateBy != ''">
-                #{updateBy}
+                #{updateBy},
             </if>
             <if test="delete != null">
-                #{delete}
+                #{delete},
             </if>
         </trim>
     </sql>
@@ -94,16 +94,116 @@
         insert into student
         (name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
         values
-        (#{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete});
+        (#{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete})
+    </insert>
+
+    <insert id="saveOrUpdate">
+        insert into student
+        (id, name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
+        values
+        (#{id}, #{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete})
+        on
+        duplicate
+        key
+        update name = #{name}, age = #{age}
+    </insert>
+
+    <insert id="saveExistIgnore">
+        insert
+        ignore
+        into
+        student
+        (
+        id,
+        name,
+        age,
+        gender,
+        address,
+        create_at,
+        update_at,
+        create_by,
+        update_by,
+        is_delete
+        )
+        value
+        (
+        #{id},
+        #{name},
+        #{age},
+        #{gender},
+        #{address},
+        #{createAt},
+        #{updateAt},
+        #{createBy},
+        #{updateBy},
+        #{delete}
+        )
+    </insert>
+
+    <insert id="saveOrReplace">
+        replace
+        into
+        student
+        (
+        id,
+        name,
+        age,
+        gender,
+        address,
+        create_at,
+        update_at,
+        create_by,
+        update_by,
+        is_delete
+        )
+        value
+        (
+        #{id},
+        #{name},
+        #{age},
+        #{gender},
+        #{address},
+        #{createAt},
+        #{updateAt},
+        #{createBy},
+        #{updateBy},
+        #{delete}
+        )
+    </insert>
+
+    <insert id="saveWithDynamicSql">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+        </trim>
+        values
+        <trim suffix=")" prefix="(" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="age != null">
+                #{age},
+            </if>
+        </trim>
     </insert>
 
     <delete id="deleteByName">
-        delete from student where name = #{name}
+        delete
+        from student
+        where name = #{name}
     </delete>
 
     <!--失效-->
-    <update id="updateAndReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="student">
-        update  student set age = #{age} where name = #{name}
+    <update id="updateAndReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="student">
+        update student
+        set age = #{age}
+        where name = #{name}
     </update>
 
 

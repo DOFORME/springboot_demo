@@ -10,10 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
-@Service
+@Service("studentService")
+@Validated
 public class StudentServiceImpl implements StudentService {
 
     private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
@@ -56,6 +61,30 @@ public class StudentServiceImpl implements StudentService {
             return false;
         }
         return studentMapper.saveStudentBaseInfo(student) > 0;
+    }
+
+    @Override
+    public boolean saveOrUpdate(Student student) {
+        int result = studentMapper.saveOrUpdate(student);
+        return result > 0;
+    }
+
+    @Override
+    public boolean saveExistIgnore(Student student) {
+        int result = studentMapper.saveExistIgnore(student);
+        return result > 0;
+    }
+
+    @Override
+    public boolean saveOrReplace(Student student) {
+        int result = studentMapper.saveOrReplace(student);
+        return result > 0;
+    }
+
+    @Override
+    public boolean saveWithDynamicSql(Student student) {
+        int result = studentMapper.saveWithDynamicSql(student);
+        return result > 0;
     }
 
     @Override
@@ -121,5 +150,9 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentMapper.getStudentBaseInfo(id);
         logger.info(new Gson().toJson(student));
         return student;
+    }
+
+    public void validate(int age) {
+        System.out.println("validate test");
     }
 }

@@ -1,7 +1,10 @@
 package com.lc.springboot.demo.service;
 
 import com.lc.springboot.demo.entity.pojo.Student;
+import org.springframework.validation.BindingResult;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public interface StudentService {
@@ -16,6 +19,14 @@ public interface StudentService {
 
     boolean saveStudentBaseInfo(Student student);
 
+    boolean saveOrUpdate(Student student);
+
+    boolean saveExistIgnore(Student student);
+
+    boolean saveOrReplace(Student student);
+
+    boolean saveWithDynamicSql(Student student);
+
     boolean delete(int id);
 
     boolean updateAgeById(Student student);
@@ -29,4 +40,6 @@ public interface StudentService {
     int selectOldestStudent();
 
     Student getStudentBaseInfo(int id);
+
+    void validate(@Min(1) int age);
 }

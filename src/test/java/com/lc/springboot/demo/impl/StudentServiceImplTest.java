@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.validation.BindingResult;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void delete() {
-        studentService.delete(6);
+        System.out.println(studentService.delete(6));
     }
 
     @Test
@@ -119,7 +120,8 @@ public class StudentServiceImplTest {
 
     @Test
     public void getStudentBaseInfo() {
-        studentService.getStudentBaseInfo(2);
+        Student student = studentService.getStudentBaseInfo(2);
+        System.out.println(new Gson().toJson(student));
     }
 
 
@@ -149,4 +151,43 @@ public class StudentServiceImplTest {
         student.setName("张三");
         System.out.println(studentService.updateAndReturnPrimaryKey(student));
     }
+
+    @Test
+    public void validate() {
+        studentService.validate(0);
+    }
+
+    @Test
+    public void saveOrUpdate() {
+        Student student = new Student();
+        student.setId(1);
+        student.setName("bob");
+        student.setAge(12);
+        System.out.println(studentService.saveOrUpdate(student));
+    }
+
+    @Test
+    public void saveExistIgnore() {
+        Student student = new Student();
+        student.setId(1);
+        student.setName("ignore");
+        System.out.println(studentService.saveExistIgnore(student));
+    }
+
+    @Test
+    public void saveOrReplace() {
+        Student student = new Student();
+        student.setId(1);
+        student.setName("ignore");
+        System.out.println(studentService.saveOrReplace(student));
+    }
+
+    @Test
+    public void saveWithDynamicSql() {
+        Student student = new Student();
+        student.setName("dynamic2");
+        student.setAge(100);
+        System.out.println(studentService.saveWithDynamicSql(student));
+    }
+
 }

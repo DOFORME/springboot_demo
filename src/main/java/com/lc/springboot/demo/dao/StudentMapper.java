@@ -20,6 +20,14 @@ public interface StudentMapper {
     @Insert("insert into student (name, age, gender) value (#{name}, #{age}, #{gender})")
     int saveStudentBaseInfo(Student student);
 
+    int saveOrUpdate(Student student);
+
+    int saveExistIgnore(Student student);
+
+    int saveOrReplace(Student student);
+
+    int saveWithDynamicSql(Student student);
+
     @Delete("delete from student where id = #{id}")
     int delete(int id);
 
