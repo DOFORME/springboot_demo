@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.lc.springboot.demo.common.SpringBootBaseResultDTO;
 import com.lc.springboot.demo.entity.pojo.Student;
 import com.lc.springboot.demo.entity.query.StudentQuery;
-import com.lc.springboot.demo.impl.StudentServiceImpl;
 import com.lc.springboot.demo.exception.BizException;
+import com.lc.springboot.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/student")
 public class StudentController {
 
-    private final StudentServiceImpl studentService;
-
     @Autowired
-    public StudentController(StudentServiceImpl studentService) {
-        this.studentService = studentService;
-    }
+    private StudentService studentService;
 
     @PostMapping("msg")
     public Student getStudentMsg(@RequestBody StudentQuery query) throws Exception {

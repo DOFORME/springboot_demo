@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 
+/**
+ * 学生相关业务类.
+ */
 @Service("studentService")
 @Validated
 public class StudentServiceImpl implements StudentService {
