@@ -9,8 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.validation.BindingResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class StudentServiceImplTest {
 
     @Autowired
@@ -27,16 +29,27 @@ public class StudentServiceImplTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImplTest.class);
 
     @Test
+    @Rollback(false)
     public void save() {
         Student student = new Student();
         student.setName("test");
-        student.setAge(100);
+        student.setAge(18);
         student.setGender("man");
         student.setAddress("nan jing");
         student.setCreateAt(LocalDateTime.now());
         student.setCreateBy("admin");
         student.setDelete(false);
         studentService.save(student);
+
+        Student student2 = new Student();
+        student2.setName("test2");
+        student2.setAge(20);
+        student2.setGender("man");
+        student2.setAddress("nan jing");
+        student2.setCreateAt(LocalDateTime.now());
+        student2.setCreateBy("admin");
+        student2.setDelete(false);
+        studentService.save(student2);
     }
 
     @Test

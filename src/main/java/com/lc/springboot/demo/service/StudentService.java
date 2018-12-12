@@ -1,14 +1,22 @@
 package com.lc.springboot.demo.service;
 
 import com.lc.springboot.demo.entity.pojo.Student;
-import org.springframework.validation.BindingResult;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * 学生业务接口
+ * @author lc
+ * @date 2018-12-12 21:32:44
+ * @version 1.0.0
+ */
 public interface StudentService {
 
+    /**
+     * 保存学生信息
+     * @param student 学生信息实体
+     */
     void save(Student student);
 
     void saveSelective(Student student);

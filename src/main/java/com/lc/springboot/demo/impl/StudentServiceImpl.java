@@ -10,15 +10,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 /**
- * 学生相关业务类.
+ * 学生相关业务类
+ * @author lc
+ * @date 2018-12-12 21:18:19
+ * @version 1.0.0
  */
 @Service("studentService")
 @Validated
+@Transactional(rollbackFor = RuntimeException.class)
 public class StudentServiceImpl implements StudentService {
 
     private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
@@ -26,11 +31,13 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentMapper studentMapper;
 
+    @Override
     public void save(Student student) {
         int result = studentMapper.save(student);
         logger.info("student save result is : {}", result);
     }
 
+    @Override
     public void saveSelective(Student student) {
         int result = studentMapper.saveSelective(student);
         logger.info("student save result is : {}", result);
@@ -122,6 +129,7 @@ public class StudentServiceImpl implements StudentService {
         return true;
     }
 
+    @Override
     public Student get(int id) {
         if (id <= 0) {
             throw new BizException(400, "student id is null");
@@ -129,6 +137,7 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.get(id);
     }
 
+    @Override
     public List<Student> getSameNameAndAgeStudent(String name, int age) {
         if (StringUtils.isBlank(name)) {
             throw new BizException(400, "name is null");
@@ -139,10 +148,12 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.getSameNameAndAgeStudent(name, age);
     }
 
+    @Override
     public int selectOldestStudent() {
         return studentMapper.getOldestStudent();
     }
 
+    @Override
     public Student getStudentBaseInfo(int id) {
         if (id < 0) {
             return null;
@@ -152,6 +163,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
+    @Override
     public void validate(int age) {
         System.out.println("validate test");
     }
