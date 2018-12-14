@@ -29,7 +29,7 @@ public class StudentServiceImplTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImplTest.class);
 
     @Test
-    @Rollback(false)
+    @Rollback()
     public void save() {
         Student student = new Student();
         student.setName("test");
@@ -113,9 +113,12 @@ public class StudentServiceImplTest {
 
     @Test
     public void get() {
-        int id = 2;
+        int id = 1;
         Student s = studentService.get(id);
         LOGGER.info(new Gson().toJson(s));
+
+        Student s2 = studentService.get(id);
+        LOGGER.info(new Gson().toJson(s2));
     }
 
     @Test

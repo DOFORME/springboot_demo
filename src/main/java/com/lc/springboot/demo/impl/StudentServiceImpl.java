@@ -1,6 +1,7 @@
 package com.lc.springboot.demo.impl;
 
 import com.google.gson.Gson;
+import com.lc.springboot.demo.common.Code;
 import com.lc.springboot.demo.dao.StudentMapper;
 import com.lc.springboot.demo.entity.pojo.Student;
 import com.lc.springboot.demo.exception.BizException;
@@ -132,7 +133,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student get(int id) {
         if (id <= 0) {
-            throw new BizException(400, "student id is null");
+            throw new BizException(Code.FAILED, "student id is null");
         }
         return studentMapper.get(id);
     }
@@ -140,10 +141,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getSameNameAndAgeStudent(String name, int age) {
         if (StringUtils.isBlank(name)) {
-            throw new BizException(400, "name is null");
+            throw new BizException(Code.FAILED, "name is null");
         }
         if (age <= 0) {
-            throw new BizException(400, "age is error");
+            throw new BizException(Code.FAILED, "age is error");
         }
         return studentMapper.getSameNameAndAgeStudent(name, age);
     }

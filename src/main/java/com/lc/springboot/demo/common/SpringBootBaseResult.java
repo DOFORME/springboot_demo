@@ -10,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class SpringBootBaseResult<T>  {
+    private static final String SERVER_ERROR = "server error";
 
     private final Integer status;
 
@@ -34,12 +35,22 @@ public class SpringBootBaseResult<T>  {
         this.time = System.currentTimeMillis();
     }
 
+    public SpringBootBaseResult(Integer status, String msg) {
+        this.status = status;
+        this.msg = msg;
+        this.data = null;
+        this.time = System.currentTimeMillis();
+    }
+
     public static SpringBootBaseResult ok() {
         return new SpringBootBaseResult();
     }
 
     public static SpringBootBaseResult fail() {
-//        return new SpringBootBaseResult()
-        return null;
+        return new SpringBootBaseResult(400, "request exception");
+    }
+
+    public static SpringBootBaseResult error() {
+        return new SpringBootBaseResult(500, SERVER_ERROR);
     }
 }
