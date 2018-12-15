@@ -1,4 +1,4 @@
-package com.lc.springboot.demo.dao;
+package com.lc.springboot.demo.dao.mapper;
 
 import com.lc.springboot.demo.entity.pojo.Student;
 import org.apache.ibatis.annotations.*;

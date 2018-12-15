@@ -2,7 +2,7 @@ package com.lc.springboot.demo.impl;
 
 import com.google.gson.Gson;
 import com.lc.springboot.demo.common.Code;
-import com.lc.springboot.demo.dao.StudentMapper;
+import com.lc.springboot.demo.dao.mapper.StudentMapper;
 import com.lc.springboot.demo.entity.pojo.Student;
 import com.lc.springboot.demo.exception.BizException;
 import com.lc.springboot.demo.service.StudentService;
