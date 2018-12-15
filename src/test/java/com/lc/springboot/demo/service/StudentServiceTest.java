@@ -1,8 +1,7 @@
-package com.lc.springboot.demo.impl;
+package com.lc.springboot.demo.service;
 
 import com.google.gson.Gson;
 import com.lc.springboot.demo.entity.pojo.Student;
-import com.lc.springboot.demo.service.StudentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -20,13 +19,13 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class StudentServiceImplTest {
+public class StudentServiceTest {
 
     @Autowired
     private StudentService studentService;
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImplTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceTest.class);
 
     @Test
     @Rollback()

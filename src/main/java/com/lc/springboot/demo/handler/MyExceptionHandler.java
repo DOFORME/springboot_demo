@@ -26,7 +26,7 @@ public class MyExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public SpringBootBaseResult handle(Exception e) {
-        log.warn("unknown exception:{}", e);
+        log.warn("系统异常", e);
         return SpringBootBaseResult.error();
     }
 

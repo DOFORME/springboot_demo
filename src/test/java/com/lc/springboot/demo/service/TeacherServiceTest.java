@@ -1,4 +1,4 @@
-package com.lc.springboot.demo.impl;
+package com.lc.springboot.demo.service;
 
 import com.lc.springboot.demo.service.TeacherService;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TeacherServiceImplTest {
+public class TeacherServiceTest {
 
     @Autowired
     private TeacherService teacherService;

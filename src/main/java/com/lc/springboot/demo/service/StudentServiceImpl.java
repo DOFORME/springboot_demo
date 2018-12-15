@@ -1,11 +1,10 @@
-package com.lc.springboot.demo.impl;
+package com.lc.springboot.demo.service;
 
 import com.google.gson.Gson;
 import com.lc.springboot.demo.common.Code;
 import com.lc.springboot.demo.dao.mapper.StudentMapper;
 import com.lc.springboot.demo.entity.pojo.Student;
 import com.lc.springboot.demo.exception.BizException;
-import com.lc.springboot.demo.service.StudentService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.lc.springboot.demo.impl;
+package com.lc.springboot.demo.service;
 
 import com.lc.springboot.demo.dao.jpa.TeacherJpaDao;
 import com.lc.springboot.demo.entity.pojo.Teacher;

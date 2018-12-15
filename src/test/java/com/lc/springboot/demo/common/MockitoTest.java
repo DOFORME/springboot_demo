@@ -10,17 +10,15 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
+//这两个注解不加则不会加载IOC容器
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-public class CodeTest {
+public class MockitoTest {
 
     @Before
     public void setUp() {
         // 初始化测试用例类中由Mockito的注解标注的所有模拟对象
         MockitoAnnotations.initMocks(this);
-
-
     }
 
     @Test
