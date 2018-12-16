@@ -1,5 +1,7 @@
 package com.lc.springboot.demo.common.util;
 
+import com.lc.springboot.demo.common.Algorithm;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,17 +20,28 @@ public class DigestUtils {
 
     private static final char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    public static String digestAsHex(String s) {
+    public static String digestAsHexString(String s, Algorithm algorithm) {
         String digestString;
-        switch (s) {
-            case MD5_ALGORITHM_NAME: digestString = md5DigestAsHex(s); break;
+        switch (algorithm.getMsg()) {
+            case MD5_ALGORITHM_NAME: digestString = md5DigestAsHexString(s); break;
             case BASE64_ALGORITHM_NAME: digestString = null; break;
             default: throw new IllegalStateException("没有找到该算法");
         }
         return digestString;
     }
 
-    private static String md5DigestAsHex(String message) {
+    public static String digestAsHexString(String s, String algorithm) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("未找到该算法", e);
+        }
+        byte[] bytes = digest.digest(s.getBytes());
+        return encodeHex(bytes);
+    }
+
+    private static String md5DigestAsHexString(String message) {
         MessageDigest md5Digest;
         try {
             md5Digest = MessageDigest.getInstance(MD5_ALGORITHM_NAME);
@@ -36,7 +49,7 @@ public class DigestUtils {
             throw new IllegalStateException("找不到该算法", e);
         }
         byte[] bytes = md5Digest.digest(message.getBytes());
-        return null;
+        return encodeHex(bytes);
     }
 
     private static String encodeHex(byte[] bytes) {
