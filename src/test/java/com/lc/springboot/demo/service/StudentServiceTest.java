@@ -205,4 +205,13 @@ public class StudentServiceTest {
         System.out.println(studentService.saveWithDynamicSql(student));
     }
 
+    @Test
+    public void string() {
+        String s = "adsagahgahg";
+        String s2 = "bfafdaghahha";
+        String s3 = "adsagahgahgbfafdaghahha";
+        String s4 = s + s2;
+        System.out.println("test");
+    }
+
 }
