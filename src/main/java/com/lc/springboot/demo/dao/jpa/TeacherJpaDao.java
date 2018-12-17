@@ -8,5 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TeacherJpaDao extends JpaRepository<Teacher, Long> {
 
+    /**
+     * 根据ID查询教师信息
+     * @param id ID
+     * @return 教师实体
+     */
     Teacher getById(int id);
+
 }

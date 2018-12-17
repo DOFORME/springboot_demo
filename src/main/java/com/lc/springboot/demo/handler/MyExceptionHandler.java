@@ -3,6 +3,8 @@ package com.lc.springboot.demo.handler;
 import com.lc.springboot.demo.common.SpringBootBaseResult;
 import com.lc.springboot.demo.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +40,25 @@ public class MyExceptionHandler {
     @ExceptionHandler(value = BizException.class)
     @ResponseBody
     public SpringBootBaseResult handleBizException(BizException e) {
-        System.out.println("biz exception handler");
+        log.warn("业务异常处理", e);
         return new SpringBootBaseResult(400, e.getMsg());
     }
+
+    /**
+     * 拦截参数校验错误异常
+     * @param e 参数校验异常
+     * @return 统一返回格式
+     */
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ResponseBody
+    public SpringBootBaseResult handleArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.warn("参数校验异常处理", e);
+        String msg = null;
+        FieldError error = e.getBindingResult().getFieldError();
+        if (error != null) {
+            msg = error.getDefaultMessage();
+        }
+        return new SpringBootBaseResult(400, msg);
+    }
+
 }

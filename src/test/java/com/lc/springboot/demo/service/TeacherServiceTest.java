@@ -1,6 +1,5 @@
 package com.lc.springboot.demo.service;
 
-import com.lc.springboot.demo.service.TeacherService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,6 @@ public class TeacherServiceTest {
 
     @Test
     public void findById() {
-        teacherService.findById(1);
+//        teacherService.findById(1);
     }
 }

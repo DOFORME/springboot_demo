@@ -16,8 +16,9 @@ public interface StudentService {
     /**
      * 保存学生信息
      * @param student 学生信息实体
+     * @return 保存结果
      */
-    void save(Student student);
+    boolean save(Student student);
 
     void saveSelective(Student student);
 

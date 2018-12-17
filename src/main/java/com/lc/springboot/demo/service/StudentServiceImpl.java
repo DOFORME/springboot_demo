@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
@@ -22,19 +21,22 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service("studentService")
-@Validated
-@Transactional(rollbackFor = RuntimeException.class)
 public class StudentServiceImpl implements StudentService {
 
     private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
-    @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
+    public void setStudentMapper(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
+    }
+
     @Override
-    public void save(Student student) {
+    @Transactional(rollbackFor = RuntimeException.class)
+    public boolean save(Student student) {
         int result = studentMapper.save(student);
-        logger.info("student save result is : {}", result);
+        return result > 0;
     }
 
     @Override
