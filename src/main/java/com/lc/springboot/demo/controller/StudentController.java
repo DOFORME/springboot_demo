@@ -25,11 +25,21 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    /**
+     * 保存学生信息
+     * @param student 学生信息
+     * @return 保存结果
+     */
     @RequestMapping(value = "save", method = {RequestMethod.POST})
-    @ResponseBody
     public SpringBootBaseResult save(@Validated(value = {Student.SaveValidate.class}) @RequestBody Student student) {
         studentService.save(student);
         return SpringBootBaseResult.ok();
+    }
+
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    public SpringBootBaseResult getStudentById(@RequestParam("id") int id) {
+        Student student = studentService.get(id);
+        return new SpringBootBaseResult<>(200, "success", student);
     }
 
 }

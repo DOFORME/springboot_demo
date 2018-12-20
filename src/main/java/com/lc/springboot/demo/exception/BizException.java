@@ -1,7 +1,8 @@
 package com.lc.springboot.demo.exception;
 
 import com.lc.springboot.demo.common.Code;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 自定义业务异常
@@ -11,16 +12,19 @@ import lombok.Data;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Data
+@Getter
+@Setter
 public class BizException extends RuntimeException {
 
-    private Code code;
-
-    private String msg;
+    private Integer code;
 
     public BizException(Code code, String msg) {
         super(msg);
+        this.code = code.getCode();
+    }
+
+    public BizException(Integer code, String msg) {
+        super(msg);
         this.code = code;
-        this.msg = msg;
     }
 }

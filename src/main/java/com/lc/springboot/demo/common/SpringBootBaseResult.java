@@ -9,8 +9,7 @@ import lombok.Data;
  * @version 1.0.0
  */
 @Data
-public class SpringBootBaseResult<T>  {
-    private static final String SERVER_ERROR = "server error";
+public class SpringBootBaseResult<T extends Object>  {
 
     private final Integer status;
 
@@ -22,23 +21,37 @@ public class SpringBootBaseResult<T>  {
 
 
     private SpringBootBaseResult() {
-        this.status = 200;
-        this.msg = "success";
+        this.status = Code.SUCCESS.getCode();
+        this.msg = Code.SUCCESS.getMsg();
         this.data = null;
         this.time = System.currentTimeMillis();
     }
 
-    public SpringBootBaseResult(Integer status, String msg, T data) {
-        this.status = status;
-        this.msg = msg;
+    public SpringBootBaseResult(Code code) {
+        this.status = code.getCode();
+        this.msg = code.getMsg();
+        this.data = null;
+        this.time = System.currentTimeMillis();
+    }
+
+    public SpringBootBaseResult(Code code, T data) {
+        this.status = code.getCode();
+        this.msg = code.getMsg();
         this.data = data;
         this.time = System.currentTimeMillis();
     }
 
-    public SpringBootBaseResult(Integer status, String msg) {
+    public SpringBootBaseResult(int status, String msg) {
         this.status = status;
         this.msg = msg;
         this.data = null;
+        this.time = System.currentTimeMillis();
+    }
+
+    public SpringBootBaseResult(int status, String msg, T data) {
+        this.status = status;
+        this.msg = msg;
+        this.data = data;
         this.time = System.currentTimeMillis();
     }
 
@@ -46,11 +59,15 @@ public class SpringBootBaseResult<T>  {
         return new SpringBootBaseResult();
     }
 
-    public static SpringBootBaseResult fail() {
-        return new SpringBootBaseResult(400, "request exception");
+    public static SpringBootBaseResult ok(Object data) {
+        return new SpringBootBaseResult<>(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), data);
+    }
+
+    public static SpringBootBaseResult failed() {
+        return new SpringBootBaseResult(Code.FAILED.getCode(), Code.FAILED.getMsg());
     }
 
     public static SpringBootBaseResult error() {
-        return new SpringBootBaseResult(500, SERVER_ERROR);
+        return new SpringBootBaseResult(Code.SERVER_ERROR.getCode(), Code.SERVER_ERROR.getMsg());
     }
 }

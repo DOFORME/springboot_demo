@@ -41,7 +41,7 @@ public class MyExceptionHandler {
     @ResponseBody
     public SpringBootBaseResult handleBizException(BizException e) {
         log.warn("业务异常处理", e);
-        return new SpringBootBaseResult(400, e.getMsg());
+        return new SpringBootBaseResult(400, e.getMessage());
     }
 
     /**
@@ -52,12 +52,12 @@ public class MyExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
     public SpringBootBaseResult handleArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.warn("参数校验异常处理", e);
         String msg = null;
         FieldError error = e.getBindingResult().getFieldError();
         if (error != null) {
             msg = error.getDefaultMessage();
         }
+        log.warn("参数校验异常,{}", msg);
         return new SpringBootBaseResult(400, msg);
     }
 

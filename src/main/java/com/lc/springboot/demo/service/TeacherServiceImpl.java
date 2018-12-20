@@ -5,14 +5,12 @@ import com.lc.springboot.demo.entity.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 /**
  * @author lc
  */
 @Service
-//@Validated
 public class TeacherServiceImpl implements TeacherService {
 
     private TeacherJpaDao teacherJpaDao;
@@ -30,7 +28,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher save(@Valid Teacher teacher) {
+    public Teacher save(Teacher teacher) {
         System.out.println("test is right");
         return null;
     }

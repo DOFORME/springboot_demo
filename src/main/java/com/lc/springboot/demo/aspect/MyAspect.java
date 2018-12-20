@@ -111,7 +111,7 @@ public class MyAspect {
      */
     @AfterThrowing(value = "pointCut()")
     public void afterThrowing() {
-        log.info("发生异常时不执行");
+        log.info("发生异常时执行");
     }
 
 

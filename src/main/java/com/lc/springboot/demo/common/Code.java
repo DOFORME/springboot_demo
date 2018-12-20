@@ -16,7 +16,7 @@ public enum Code {
     /**
      * 失败
      */
-    FAILED(400, "失败"),
+    FAILED(400, "请求失败"),
 
     /**
      * 无用户数据
