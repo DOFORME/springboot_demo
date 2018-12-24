@@ -1,6 +1,6 @@
 package com.lc.springboot.demo2.reflect;
 
-public class Array {
+public class MyArray {
 
     public static void main(String[] args) {
         int[] ints = {1, 2, 3, 4, 5,};
@@ -25,7 +25,7 @@ public class Array {
         }
 
 
-        Array a = new Array();
+        MyArray a = new MyArray();
         a.m("s", "ss", "sss");
 
 
