@@ -23,11 +23,15 @@ public class Teacher implements Serializable {
     private Integer id;
 
     @Column(length = 10)
-    @Size(max = 2)
+    @Size(max = 2, min = 1, groups = {saveValidator.class})
     private String name;
 
     @Column(length = 10)
-    @NotNull
+    @NotNull(groups = {updateValidator.class})
     private String course;
+
+    public interface saveValidator {}
+
+    public interface updateValidator {}
 
 }

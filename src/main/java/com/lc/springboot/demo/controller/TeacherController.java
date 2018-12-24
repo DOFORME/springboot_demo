@@ -4,6 +4,7 @@ import com.lc.springboot.demo.common.SpringBootBaseResult;
 import com.lc.springboot.demo.entity.pojo.Teacher;
 import com.lc.springboot.demo.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public SpringBootBaseResult save(Teacher teacher) {
+    public SpringBootBaseResult save(@RequestBody Teacher teacher) {
         teacherService.save(teacher);
         return SpringBootBaseResult.ok();
     }

@@ -1,10 +1,19 @@
 package com.lc.springboot.demo.common;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
+@Getter
+@Setter
+@ToString
 public class BaseEntity implements Serializable {
+
+
+    private static final long serialVersionUID = 7376265529592347497L;
 
 
     private Integer id;
@@ -16,6 +25,10 @@ public class BaseEntity implements Serializable {
     private Integer pageNo;
     private Integer pageSize;
     private Integer offset;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Integer getId() {
         return id;
@@ -57,6 +70,13 @@ public class BaseEntity implements Serializable {
         this.updateBy = updateBy;
     }
 
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
 
     public Integer getPageNo() {
         return pageNo;
@@ -80,13 +100,5 @@ public class BaseEntity implements Serializable {
 
     public void setOffset(Integer offset) {
         this.offset = offset;
-    }
-
-    public Boolean getDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(Boolean delete) {
-        isDelete = delete;
     }
 }

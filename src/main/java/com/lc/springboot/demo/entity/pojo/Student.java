@@ -1,7 +1,9 @@
 package com.lc.springboot.demo.entity.pojo;
 
 import com.lc.springboot.demo.common.BaseEntity;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 import javax.validation.constraints.Max;
@@ -18,8 +20,13 @@ import java.util.List;
  *
  */
 @Alias("student")
-@Data
+@Getter
+@Setter
+@ToString
 public class Student extends BaseEntity {
+
+    private static final long serialVersionUID = -2418011761296364471L;
+
 
     @NotNull(message = "姓名不得为空", groups = {SaveValidate.class, UpdateValidate.class})
     @Size(min = 2, max = 4, message = "姓名长度只能在2~4个字符之间", groups = {SaveValidate.class})
