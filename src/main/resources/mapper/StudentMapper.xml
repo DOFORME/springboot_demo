@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lc.springboot.demo.dao.mapper.StudentMapper">
+<mapper namespace="com.lc.demo.springboot.dao.mapper.StudentMapper">
 
     <sql id="column">
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -207,7 +207,7 @@
     </update>
 
 
-    <select id="get" resultType="com.lc.springboot.demo.entity.pojo.Student">
+    <select id="get" resultType="com.lc.demo.springboot.entity.pojo.Student">
         select id,
                name,
                age,
