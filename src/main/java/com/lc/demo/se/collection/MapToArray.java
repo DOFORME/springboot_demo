@@ -1,9 +1,8 @@
 package com.lc.demo.se.collection;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import com.lc.demo.springboot.entity.pojo.Student;
+
+import java.util.*;
 
 public class MapToArray {
 
@@ -18,6 +17,8 @@ public class MapToArray {
         MapToArray mta = new MapToArray();
 
         mta.testConcurrentModificationException();
+
+        mta.testTreeSet();
     }
 
     public void testBase() {
@@ -60,11 +61,33 @@ public class MapToArray {
         Iterator iterator2 = list.iterator();
 
         iterator1.next();
-        iterator1.remove();
         iterator2.next();
+    }
 
+    public void testTreeSet() {
+        Set<String> strings = new TreeSet<>();
+        strings.add("bob");
+        strings.add("alice");
+        strings.add("carl");
+        for (String s : strings) {
+            System.out.println(s);
+        }
 
+        Set<String> newSet = new HashSet<>(strings);
+        for (String s : newSet) {
+            System.out.println("hash set-" + s);
+        }
 
+        Set<Student> studentSet = new TreeSet<>();
+        Student s1 = new Student();
+        Student s2 = new Student();
+        s1.setName("bob");
+        s2.setName("alice");
+        studentSet.add(s1);
+        studentSet.add(s2);
+        for (Student s : studentSet) {
+            System.out.println(s.getName());
+        }
     }
 
 
