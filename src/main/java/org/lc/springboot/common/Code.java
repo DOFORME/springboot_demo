@@ -16,7 +16,7 @@ public enum Code {
     /**
      * 失败
      */
-    FAILED(400, "请求失败"),
+    FAILED(4000, "请求失败"),
 
     /**
      * 无用户数据
@@ -38,7 +38,7 @@ public enum Code {
 
     private String msg;
 
-    private Code(int code, String msg) {
+    Code(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

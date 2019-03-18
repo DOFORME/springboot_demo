@@ -15,8 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "org.lc.springboot.dao.jpa")
-@EntityScan(basePackages = "com.lc.demo.springboot.entity.pojo")
-@MapperScan("com.lc.demo.springboot.dao.mapper")
+@EntityScan(basePackages = "org.lc.springboot.entity.pojo")
+@MapperScan("org.lc.springboot.dao.mapper")
 public class Application {
 
     public static void main(String[] args) {

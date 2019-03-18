@@ -93,82 +93,73 @@
     <insert id="saveStudentAndReturnKey" useGeneratedKeys="true" keyProperty="id">
         insert into student
         (name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
-        values
-        (#{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete})
+        values (#{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete})
     </insert>
 
     <insert id="saveOrUpdate">
         insert into student
         (id, name, age, gender, address, create_at, update_at, create_by, update_by, is_delete)
-        values
-        (#{id}, #{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy}, #{delete})
-        on
-        duplicate
-        key
-        update name = #{name}, age = #{age}
+        values (#{id}, #{name}, #{age}, #{gender}, #{address}, #{createAt}, #{updateAt}, #{createBy}, #{updateBy},
+                #{delete})
+        on duplicate key update name = #{name},
+                                age  = #{age}
     </insert>
 
     <insert id="saveExistIgnore">
         insert
-        ignore
-        into
-        student
-        (
-        id,
-        name,
-        age,
-        gender,
-        address,
-        create_at,
-        update_at,
-        create_by,
-        update_by,
-        is_delete
-        )
-        value
-        (
-        #{id},
-        #{name},
-        #{age},
-        #{gender},
-        #{address},
-        #{createAt},
-        #{updateAt},
-        #{createBy},
-        #{updateBy},
-        #{delete}
-        )
+            ignore
+        into student
+        (id,
+         name,
+         age,
+         gender,
+         address,
+         create_at,
+         update_at,
+         create_by,
+         update_by,
+         is_delete)
+            value
+            (
+             #{id},
+             #{name},
+             #{age},
+             #{gender},
+             #{address},
+             #{createAt},
+             #{updateAt},
+             #{createBy},
+             #{updateBy},
+             #{delete}
+                )
     </insert>
 
     <insert id="saveOrReplace">
         replace
-        into
-        student
-        (
-        id,
-        name,
-        age,
-        gender,
-        address,
-        create_at,
-        update_at,
-        create_by,
-        update_by,
-        is_delete
-        )
-        value
-        (
-        #{id},
-        #{name},
-        #{age},
-        #{gender},
-        #{address},
-        #{createAt},
-        #{updateAt},
-        #{createBy},
-        #{updateBy},
-        #{delete}
-        )
+            into student
+        (id,
+         name,
+         age,
+         gender,
+         address,
+         create_at,
+         update_at,
+         create_by,
+         update_by,
+         is_delete)
+            value
+            (
+             #{id},
+             #{name},
+             #{age},
+             #{gender},
+             #{address},
+             #{createAt},
+             #{updateAt},
+             #{createBy},
+             #{updateBy},
+             #{delete}
+                )
     </insert>
 
     <insert id="saveWithDynamicSql">
@@ -251,6 +242,12 @@
         from student
         where name = #{param1}
           and age = #{param2}
+    </select>
+
+    <select id="getStudentsByClassId" resultType="student">
+        select *
+        from student
+        where class_id = #{id}
     </select>
 </mapper>
 

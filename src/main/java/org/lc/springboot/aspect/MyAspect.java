@@ -25,7 +25,7 @@ import java.util.Arrays;
 @Slf4j
 public class MyAspect {
 
-    private final String POINT_CUT = "execution(public * StudentController.*(..))";
+    private final String POINT_CUT = "execution(public * org.lc.springboot.controller.StudentController.*(..))";
 
     private ThreadLocal<Long> startTimestamp = new ThreadLocal<>();
 

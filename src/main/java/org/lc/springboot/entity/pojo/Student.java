@@ -39,6 +39,8 @@ public class Student extends BaseEntity {
     @NotNull(message = "性别不能为空", groups = {UpdateValidate.class})
     private String gender;
 
+    private Integer classId;
+
     private String address;
 
     private List<Course> courses;

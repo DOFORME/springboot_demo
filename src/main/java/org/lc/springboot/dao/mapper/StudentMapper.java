@@ -70,4 +70,6 @@ public interface StudentMapper {
             @Result(column = "address", property = "address")
     })
     Student getStudentBaseInfo(int id);
+
+    List<Student> getStudentsByClassId(int id);
 }
