@@ -6,15 +6,16 @@ import org.lc.springboot.dao.jpa.ClassJpaDao;
 import org.lc.springboot.dao.jpa.ClassTeacherJpaDao;
 import org.lc.springboot.dao.jpa.TeacherJpaDao;
 import org.lc.springboot.dao.mapper.StudentMapper;
+import org.lc.springboot.entity.ClassDTO;
 import org.lc.springboot.entity.pojo.ClassTeacher;
 import org.lc.springboot.entity.pojo.Clazz;
 import org.lc.springboot.entity.pojo.Student;
+import org.lc.springboot.entity.pojo.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 班级信息
@@ -54,20 +55,23 @@ public class ClassInfoManager {
      * @param no    班级号
      * @return 班级信息
      */
-    public Map<String, List> getClassInfo(int grade, int no) {
+    public ClassDTO queryClassInfo(int grade, int no) {
         log.debug("查询班级信息，年级：{}，班级：{}", grade, no);
         long start = System.currentTimeMillis();
-        Map<String, List> data = new HashMap<>();
         Clazz clazz = classJpaDao.getClazzByGradeAndNo(grade, no);
         List<ClassTeacher> classTeachers = classTeacherJpaDao.queryByClassId(clazz.getId());
+        List<Teacher> teachers = new ArrayList<>();
+        for (ClassTeacher ct : classTeachers) {
+            Teacher teacher = teacherJpaDao.getById(ct.getTeacherId());
+            teachers.add(teacher);
+        }
         List<Student> students = studentMapper.getStudentsByClassId(clazz.getId());
-        System.out.println("====================");
-        System.out.println(classTeachers.size());
-        System.out.println(students.size());
-        System.out.println("====================");
         long end = System.currentTimeMillis();
-        System.out.println("总耗时：" + (end - start) + "ms");
-        log.debug("查询结束，总耗时：{},返回数据：{}", end - start, new Gson().toJson(data));
-        return data;
+        ClassDTO dto = new ClassDTO();
+        dto.setClazz(clazz);
+        dto.setStudents(students);
+        dto.setTeachers(teachers);
+        log.debug("查询结束，总耗时：{},返回数据：{}", end - start, new Gson().toJson(dto));
+        return dto;
     }
 }
