@@ -1,14 +1,8 @@
 package org.lc.springboot.common;
 
-import com.google.gson.Gson;
-import org.lc.springboot.dao.jpa.TeacherJpaDao;
-import org.lc.springboot.entity.pojo.Teacher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 //这两个注解不加则不会加载IOC容器
 //@RunWith(SpringRunner.class)
@@ -23,11 +17,11 @@ public class MockitoTest {
 
     @Test
     public void mockTest() {
-        Teacher teacher = new Teacher();
-        teacher.setId(1);
-        teacher.setName("mock");
-        TeacherJpaDao dao = mock(TeacherJpaDao.class);
-        when(dao.getById(0)).thenReturn(teacher);
-        System.out.println(new Gson().toJson(dao.getById(0)));
+//        Teacher teacher = new Teacher();
+//        teacher.setId(1);
+//        teacher.setName("mock");
+//        TeacherJpaDao dao = mock(TeacherJpaDao.class);
+//        when(dao.getById(0)).thenReturn(teacher);
+//        System.out.println(new Gson().toJson(dao.getById(0)));
     }
 }

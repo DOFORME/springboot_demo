@@ -1,4 +1,4 @@
-import org.lc.Application;
+import org.lc.SpringBootDemoApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +7,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 // 不在Application类的子包下，需要指定
-@SpringBootTest(classes = {Application.class})
+@SpringBootTest(classes = {SpringBootDemoApplication.class})
 @WebAppConfiguration
 public class BaseTest {
 

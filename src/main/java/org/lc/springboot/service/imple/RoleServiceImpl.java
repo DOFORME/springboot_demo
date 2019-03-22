@@ -1,22 +1,23 @@
 package org.lc.springboot.service.imple;
 
-import org.lc.springboot.dao.jpa.RoleJpaDao;
-import org.lc.springboot.entity.pojo.Role;
+import org.lc.springboot.dao.mapper.RoleMapper;
 import org.lc.springboot.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class RoleServiceImpl implements RoleService {
-    private RoleJpaDao roleJpaDao;
+    private RoleMapper roleMapper;
 
     @Autowired
-    public void setRoleJpaDao(RoleJpaDao roleJpaDao) {
-        this.roleJpaDao = roleJpaDao;
+    public void setRoleMapper(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
     }
 
     @Override
-    public Role getRoleById(int id) {
-        return roleJpaDao.getRoleById(id);
+    public Set<String> selectRolesNameByUsername(String username) {
+        return roleMapper.selectRolesNameByUsername(username);
     }
 }

@@ -5,14 +5,12 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.lc.springboot.entity.pojo.Role;
-import org.lc.springboot.entity.pojo.User;
-import org.lc.springboot.manager.UserRolesManager;
-import org.lc.springboot.service.UserService;
+import org.lc.springboot.dao.mapper.PermissionMapper;
+import org.lc.springboot.dao.mapper.RoleMapper;
+import org.lc.springboot.dao.mapper.UserMapper;
+import org.lc.springboot.entity.pojo.DO.UserDo;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,34 +19,13 @@ import java.util.Set;
  * https://segmentfault.com/a/1190000008847948
  */
 public class CustomRealm extends AuthorizingRealm {
-    private UserRolesManager userRolesManager;
-    private UserService userService;
-
     @Autowired
-    public void setUserRolesManager(UserRolesManager userRolesManager) {
-        this.userRolesManager = userRolesManager;
-    }
-
+    private UserMapper userMapper;
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private RoleMapper roleMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
 
-    /**
-     * 授权
-     */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) super.getAvailablePrincipal(principalCollection);
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<Role> roles = userRolesManager.getUserRolesByName(username);
-        Set<String> rs = new HashSet<>();
-        for (Role r : roles) {
-            rs.add(r.getName());
-        }
-        info.setRoles(rs);
-        return null;
-    }
 
     /**
      * 认证
@@ -57,8 +34,27 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
-        User user = userService.getUserByName(username);
+        UserDo user = userMapper.getUserByLoginNameAndFlag(username, 1);
+        if (user == null) {
+            return null;
+        }
         String password = user.getPassword();
         return new SimpleAuthenticationInfo(username, password, getName());
+    }
+
+    /**
+     * 授权
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        String username = (String) super.getAvailablePrincipal(principalCollection);
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        Set<String> roles = roleMapper.selectRolesNameByUsername(username);
+        authorizationInfo.setRoles(roles);
+        roles.forEach(roleName -> {
+            Set<String> permissions = permissionMapper.selectPermissionsNameByRoleName(roleName);
+            authorizationInfo.addStringPermissions(permissions);
+        });
+        return authorizationInfo;
     }
 }

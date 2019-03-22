@@ -1,9 +1,7 @@
 package org.lc.springboot.aspect;
 
-import org.lc.springboot.common.SpringBootBaseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,7 @@ import java.util.Arrays;
 @Slf4j
 public class MyAspect {
 
-    private final String POINT_CUT = "execution(public * org.lc.springboot.controller.StudentController.*(..))";
+    private final String POINT_CUT = "execution(public * org.lc.springboot.controller.*.*(..))";
 
     private ThreadLocal<Long> startTimestamp = new ThreadLocal<>();
 
@@ -48,12 +46,12 @@ public class MyAspect {
      * @return controller的返回结果
      * @throws Throwable 异常或者系统错误
      */
-    @Around(value = "pointCut()")
-    public SpringBootBaseResult around(ProceedingJoinPoint pjp) throws Throwable {
-        log.info("环绕通知");
-        log.info("目标方法名：{}", pjp.getSignature().getName());
-        return (SpringBootBaseResult) pjp.proceed();
-    }
+//    @Around(value = "pointCut()")
+//    public SpringBootBaseResultVO around(ProceedingJoinPoint pjp) throws Throwable {
+//        log.info("环绕通知");
+//        log.info("目标方法名：{}", pjp.getSignature().getName());
+//        return (SpringBootBaseResultVO) pjp.proceed();
+//    }
 
 
     /**
@@ -67,6 +65,7 @@ public class MyAspect {
         if (attributes != null) {
             request = attributes.getRequest();
             log.info("本次请求方IP：" + request.getRemoteHost() + " 请求路径：" + request.getRequestURI());
+            log.info("完整路径：{}", request.getRequestURL());
             log.info("本次请求参数是：{}", Arrays.toString(joinPoint.getArgs()));
         }
 

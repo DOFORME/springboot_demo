@@ -1,8 +1,8 @@
 package org.lc.springboot.service;
 
-import org.lc.springboot.entity.pojo.Role;
+import java.util.Set;
 
 public interface RoleService {
 
-    Role getRoleById(int id);
+    Set<String> selectRolesNameByUsername(String username);
 }

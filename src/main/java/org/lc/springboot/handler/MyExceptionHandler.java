@@ -1,8 +1,11 @@
 package org.lc.springboot.handler;
 
-import org.lc.springboot.common.SpringBootBaseResult;
-import org.lc.springboot.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.lc.springboot.entity.pojo.VO.SpringBootBaseResultVO;
+import org.lc.springboot.exception.BizException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,9 +30,9 @@ public class MyExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public SpringBootBaseResult handle(Exception e) {
+    public SpringBootBaseResultVO handle(Exception e) {
         log.warn("系统异常", e);
-        return SpringBootBaseResult.error();
+        return SpringBootBaseResultVO.error();
     }
 
     /**
@@ -39,9 +42,8 @@ public class MyExceptionHandler {
      */
     @ExceptionHandler(value = BizException.class)
     @ResponseBody
-    public SpringBootBaseResult handleBizException(BizException e) {
-        log.warn("业务异常处理", e);
-        return new SpringBootBaseResult(400, e.getMessage());
+    public SpringBootBaseResultVO handleBizException(BizException e) {
+        return new SpringBootBaseResultVO(400, e.getMessage());
     }
 
     /**
@@ -51,14 +53,37 @@ public class MyExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
-    public SpringBootBaseResult handleArgumentNotValidException(MethodArgumentNotValidException e) {
+    public SpringBootBaseResultVO handleArgumentNotValidException(MethodArgumentNotValidException e) {
         String msg = null;
         FieldError error = e.getBindingResult().getFieldError();
         if (error != null) {
             msg = error.getDefaultMessage();
         }
         log.warn("参数校验异常,{}", msg);
-        return new SpringBootBaseResult(400, msg);
+        return new SpringBootBaseResultVO(400, msg);
     }
 
+    @ExceptionHandler(value = UnauthenticatedException.class)
+    @ResponseBody
+    public SpringBootBaseResultVO handleUnauthenticatedException() {
+        String msg = "权限不足";
+        log.warn(msg);
+        return new SpringBootBaseResultVO(400, msg);
+    }
+
+    @ExceptionHandler(value = UnauthorizedException.class)
+    @ResponseBody
+    public SpringBootBaseResultVO handleUnauthorizedException() {
+        String msg = "权限条目不存在";
+        log.warn(msg);
+        return new SpringBootBaseResultVO(400, msg);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseBody
+    public SpringBootBaseResultVO handleAuthenticationException() {
+        String msg = "身份认证失败";
+        log.warn(msg);
+        return new SpringBootBaseResultVO(400, msg);
+    }
 }
