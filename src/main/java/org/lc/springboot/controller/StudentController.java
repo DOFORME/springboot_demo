@@ -1,6 +1,6 @@
 package org.lc.springboot.controller;
 
-import org.hibernate.validator.constraints.Length;
+import lombok.extern.slf4j.Slf4j;
 import org.lc.springboot.entity.pojo.DTO.StudentDTO;
 import org.lc.springboot.entity.pojo.QO.StudentQuery;
 import org.lc.springboot.entity.pojo.QO.group.StudentUpdateById;
@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-
 @RestController
 @RequestMapping("student")
+@Validated
+@Slf4j
 public class StudentController {
     private StudentService studentService;
 
@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public SpringBootBaseResultVO getStudentById(@PathVariable @Length(min = 2) int id) {
+    public SpringBootBaseResultVO getStudentById(@PathVariable int id) {
         StudentDTO dto = studentService.getStudentById(id);
         return SpringBootBaseResultVO.ok(dto);
     }
@@ -35,8 +35,7 @@ public class StudentController {
     }
 
     @GetMapping("test")
-    public SpringBootBaseResultVO test(@NotNull String name) {
-        System.out.println(name);
+    public SpringBootBaseResultVO test() {
         return SpringBootBaseResultVO.ok();
     }
 }

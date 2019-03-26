@@ -1,6 +1,8 @@
 package org.lc.springboot.entity.pojo.VO;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.lc.springboot.common.Code;
 
 /**
@@ -9,8 +11,10 @@ import org.lc.springboot.common.Code;
  * @date 2018-12-13 23:41:15
  * @version 1.0.0
  */
-@Data
-public class SpringBootBaseResultVO<T extends Object>  {
+@Getter
+@Setter
+@ToString
+public class SpringBootBaseResultVO<T>  {
 
     private final Integer status;
 

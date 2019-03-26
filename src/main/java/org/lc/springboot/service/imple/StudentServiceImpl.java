@@ -10,6 +10,7 @@ import org.lc.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j()
@@ -35,9 +36,13 @@ public class StudentServiceImpl implements StudentService {
         return dto;
     }
 
+    @Transactional
     @Override
     public boolean updateStudentById(StudentQuery query) {
         int result = studentMapper.updateStudentById(query);
+        if (result == 1) {
+            throw new BizException("test");
+        }
         return result > 0;
     }
 }
